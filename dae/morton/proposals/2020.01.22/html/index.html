@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Demo app</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <svg id="def">
+        <defs>
+          <filter id="blur" x="0" y="0">
+            <feGaussianBlur
+              in="SourceGraphic"
+              stdDeviation="0"
+            ></feGaussianBlur>
+          </filter>
+          <filter x="0" y="0" width="1" height="1" id="solid">
+            <feFlood :flood-color="floodColor" />
+            <feComposite in="SourceGraphic" operator="over" />
+          </filter>
+        </defs>
+      </svg>
+      <div
+        v-for="(projection, index) in projections"
+        :key="projection"
+        class="container"
+        :style="`background-color: ${bgColor}`"
+      >
+        <map-composable
+          :projection="projection"
+          :projection-config="projectionConfig"
+        >
+          <template v-slot:default="{path, projectionFunc}">
+            <map-graticule
+              :fill="graniculeColorFill"
+              :stroke="graniculeColorStroke"
+              clip-path="url(#rsm-sphere)"
+              :stroke-width="1"
+            >
+            </map-graticule>
+            <map-geographies :geography="geoUrl" :path="path">
+              <template v-slot:default="{geographies}">
+                <map-geography
+                  v-for="geo in geographies"
+                  :key="geo.rsmKey"
+                  :geography="geo"
+                  fill="white"
+                  stroke="black"
+                  clipPath="url(#rsm-sphere)"
+                ></map-geography>
+                <map-marker
+                  :coordinates="[x,y]"
+                  r="2"
+                  fill="black"
+                  v-for="{x,y} in randomMarkers"
+                >
+                  <rect width="10" height="10" stroke="black" fill="white" />
+                </map-marker>
+                <map-annotation
+                  :subject="[randomMarkers[0].x, randomMarkers[0].y]"
+                  :dx="-35"
+                  :dy="50"
+                  text="texts[index]"
+                >
+                  <text
+                    style="font-size: 200%;"
+                    :y="index2 * 45"
+                    v-for="(text, index2) in texts[index]"
+                    filter="url(#solid)"
+                    :fill="floodColor === 'black' ? 'white' : 'black'"
+                    >{{ text }}</text
+                  >
+                </map-annotation>
+              </template>
+            </map-geographies>
+          </template>
+        </map-composable>
+      </div>
+      <div style="position: absolute; margin: 1rem">
+        <div v-for="(text, index) in texts.slice(1, 3)">
+          <span v-for="(word, index2) in text" :style="`color: ${bgColor === 'black' ? 'white' : 'black'}`">{{ word }} </span>
+        </div>
+      </div>
+      <div style="position: absolute; margin: 1rem; bottom: 0">
+          <span :style="`color: ${bgColor === 'black' ? 'white' : 'black'}; font-size: 200%`">Being Ecological </span>
+          <div v-for="(text, index) in texts.slice(3)">
+            <span v-for="(word, index2) in text" :style="`color: ${bgColor === 'black' ? 'white' : 'black'}`">{{ word }} </span>
+          </div>
+        </div>
+      <div
+        style="position: absolute; margin: 1rem; bottom: 0; right: 0; left: 0; top: 0; display: flex; justify-content: center; align-items: center;"
+      >
+        <img
+          src="https://image.flaticon.com/icons/svg/30/30662.svg"
+          style="mix-blend-mode: color; transform: scale(2); filter: blur(5px);"
+        />
+      </div>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+  <script src="https://unpkg.com/@vue/composition-api/dist/vue-composition-api.umd.js"></script>
+  <script>
+    Vue.use(vueCompositionApi.default);
+  </script>
+  <script src="https://unpkg.com/d3@5.12.0/dist/d3.min.js"></script>
+  <script src="https://unpkg.com/@eliaspourquoi/vue-map@0.0.7/dist/VueMap.iife.js"></script>
+  <script>
+    Vue.use(VueMap.default);
+    function shuffle(a) {
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+    const randomArr = arr => arr[Math.floor(Math.random() * arr.length)];
+    var app = new Vue({
+      el: "#app",
+      setup() {
+        const projections = shuffle(["geoEqualEarth"]);
+        const rotate = vueCompositionApi.reactive({
+          x: 0,
+          y: 0
+        });
+        const projectionConfig = vueCompositionApi.computed(() => ({
+          rotate: [rotate.x, rotate.y],
+          scale: 65
+        }));
+
+        setTimeout(() => {
+          document
+            .querySelector("feGaussianBlur")
+            .setAttribute("stdDeviation", Math.floor(Math.random() * 0));
+        }, 200);
+
+        const bgColor = randomArr([
+          "red",
+          "chartreuse",
+          "yellow",
+          "black",
+          "transparent"
+        ]);
+        return {
+          projectionConfig: {
+            rotate: [
+              360 - Math.floor(Math.random() * 60),
+              20 - Math.floor(Math.random() * 40)
+            ],
+            scale: 60
+          },
+          projections,
+          texts: [
+            ["Timothy Morton"],
+            ["Thursday"],
+            ["January, ", "30"],
+            ["SOURCE", "Information", "Design"],
+            ["Lecture Series"],
+            ["Design", "Academy", "Eindhoven"],
+            ["10 — 12am"],
+            ["MU Space"]
+          ],
+          geoUrl:
+            "https://rawcdn.githack.com/nestarz/vue-map/633c7f5378124a3e5dd45faeb39f374c3e118ce4/demo/word-110m.json",
+          width: window.innerWidth,
+          height: window.innerHeight,
+          randomMarkers: [{ y: 51.44083, x: 5.47778 }], // Eindhoven
+          floodColor: bgColor ? "black" : bgColor ? "white" : "transparent",
+          graniculeColorFill: randomArr([
+            "red",
+            "chartreuse",
+            "yellow",
+            "black",
+            "white",
+            "transparent"
+          ]),
+          graniculeColorStroke: randomArr([
+            "red",
+            "chartreuse",
+            "yellow",
+            "black",
+            "white",
+            "transparent"
+          ]),
+          bgColor
+        };
+      }
+    });
+  </script>
+</html>
+<style>
+  @page {
+    size: A3;
+  }
+
+  @media screen {
+    html {
+      max-width: 33rem;
+    }
+  }
+
+  #app,
+  .container,
+  html,
+  body {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 24pt;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  }
+  body .container {
+    height: 100%;
+  }
+
+  #def {
+    position: absolute;
+  }
+
+  #app {
+    display: grid;
+    grid-template-columns: 1fr;
+    max-height: 100%;
+    overflow: hidden;
+  }
+
+  a {
+    color: black;
+  }
+
+  .vue-map-geography,
+  .rsm-graticule {
+    filter: url(#blur);
+  }
+
+  .info {
+    position: fixed;
+    padding: 1rem;
+    pointer-events: none;
+  }
+
+  p,
+  h1,
+  li,
+  ul,
+  a {
+    pointer-events: all;
+    width: max-content;
+    margin: 0;
+    padding: 0;
+  }
+
+  ul {
+    list-style: none;
+    margin-top: 0.25rem;
+  }
+</style>

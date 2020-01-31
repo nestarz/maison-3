@@ -1,0 +1,7 @@
+{
+  "imports": {
+    "es-module-shims": "./es-module-shims.js",
+    "path-to-regexp": "./path-to-regexp.js",
+    "yamljs": "./yamljs.js"
+  }
+}

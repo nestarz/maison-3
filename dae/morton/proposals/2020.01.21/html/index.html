@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Demo app</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <svg id="def">
+        <defs>
+          <filter id="blur" x="0" y="0">
+            <feGaussianBlur
+              in="SourceGraphic"
+              stdDeviation="4"
+            ></feGaussianBlur>
+          </filter>
+          <filter x="0" y="0" width="1" height="1" id="solid">
+            <feFlood :flood-color="floodColor" />
+            <feComposite in="SourceGraphic" operator="over" />
+          </filter>
+        </defs>
+      </svg>
+      <div
+        v-for="(projection, index) in projections"
+        :key="projection"
+        class="container"
+        :style="`background-color: ${bgColor}`"
+      >
+        <map-composable
+          :projection="projection"
+          :projection-config="projectionConfig"
+        >
+          <template v-slot:default="{path, projectionFunc}">
+            <map-graticule
+              :fill="graniculeColorFill"
+              :stroke="graniculeColorStroke"
+              clip-path="url(#rsm-sphere)"
+              :stroke-width="1"
+            >
+            </map-graticule>
+            <map-geographies :geography="geoUrl" :path="path">
+              <template v-slot:default="{geographies}">
+                <map-geography
+                  v-for="geo in geographies"
+                  :key="geo.rsmKey"
+                  :geography="geo"
+                  fill="white"
+                  stroke="black"
+                  clipPath="url(#rsm-sphere)"
+                ></map-geography>
+                <map-marker
+                  :coordinates="[x,y]"
+                  r="2"
+                  fill="black"
+                  v-for="{x,y} in randomMarkers"
+                >
+                  <rect width="10" height="10" stroke="black" fill="white" />
+                </map-marker>
+                <map-annotation
+                  :subject="[randomMarkers[0].x, randomMarkers[0].y]"
+                  :dx="-35"
+                  :dy="50"
+                  text="texts[index]"
+                >
+                  <text
+                    :y="index2 * 45"
+                    v-for="(text, index2) in texts[index]"
+                    filter="url(#solid)"
+                    :fill="floodColor === 'black' ? 'white' : 'black'"
+                    >{{ text }}</text
+                  >
+                </map-annotation>
+              </template>
+            </map-geographies>
+          </template>
+        </map-composable>
+      </div>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+  <script src="https://unpkg.com/@vue/composition-api/dist/vue-composition-api.umd.js"></script>
+  <script>
+    Vue.use(vueCompositionApi.default);
+  </script>
+  <script src="https://unpkg.com/d3@5.12.0/dist/d3.min.js"></script>
+  <script src="https://unpkg.com/@eliaspourquoi/vue-map@0.0.7/dist/VueMap.iife.js"></script>
+  <script>
+    Vue.use(VueMap.default);
+    function shuffle(a) {
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+    const randomArr = arr => arr[Math.floor(Math.random() * arr.length)];
+    var app = new Vue({
+      el: "#app",
+      setup() {
+        const projections = shuffle([
+          "geoEqualEarth",
+          "geoMercator",
+          "geoTransverseMercator",
+          "geoAlbers",
+          "geoAzimuthalEqualArea",
+          "geoAzimuthalEquidistant",
+          "geoOrthographic",
+          "geoConicConformal",
+          "geoConicEqualArea",
+          "geoConicEquidistant"
+        ]);
+        const rotate = vueCompositionApi.reactive({
+          x: 0,
+          y: 0
+        });
+        const projectionConfig = vueCompositionApi.computed(() => ({
+          rotate: [rotate.x, rotate.y],
+          scale: 65
+        }));
+
+        setTimeout(() => {
+          document
+            .querySelector("feGaussianBlur")
+            .setAttribute("stdDeviation", Math.floor(Math.random() * 6));
+        }, 200);
+        return {
+          projectionConfig: {
+            rotate: [
+              360 - Math.floor(Math.random() * 60),
+              20 - Math.floor(Math.random() * 40)
+            ],
+            scale: 60
+          },
+          projections,
+          texts: [
+            ["Timothy Morton"],
+            ["Thursday"],
+            ["January"],
+            ["30", "2020"],
+            ["SOURCE", "Information", "Design"],
+            ["Lecture Series"],
+            ["at"],
+            ["Design", "Academy", "Eindhoven"],
+            ["10 — 12am"],
+            ["MU Space"]
+          ],
+          geoUrl:
+            "https://rawcdn.githack.com/nestarz/vue-map/633c7f5378124a3e5dd45faeb39f374c3e118ce4/demo/word-110m.json",
+          width: window.innerWidth,
+          height: window.innerHeight,
+          randomMarkers: [{ y: 51.44083, x: 5.47778 }], // Eindhoven
+          floodColor: randomArr(["white", "transparent", "black"]),
+          graniculeColorFill: randomArr([
+            "red",
+            "chartreuse",
+            "yellow",
+            "black",
+            "white",
+            "transparent"
+          ]),
+          graniculeColorStroke: randomArr([
+            "red",
+            "chartreuse",
+            "yellow",
+            "black",
+            "white",
+            "transparent"
+          ]),
+          bgColor: randomArr([
+            "red",
+            "chartreuse",
+            "yellow",
+            "black",
+            "transparent"
+          ])
+        };
+      }
+    });
+  </script>
+</html>
+<style>
+  @page {
+    size: A3;
+  }
+
+  @media screen {
+    html {
+      max-width: 33rem;
+    }
+  }
+
+  div,
+  html,
+  body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 28pt;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  }
+  body .container {
+    height: 100%;
+  }
+
+  #def {
+    position: absolute;
+  }
+
+  #app {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-height: 100%;
+    overflow: hidden;
+  }
+
+  a {
+    color: black;
+  }
+
+  .vue-map-geography,
+  .rsm-graticule {
+    filter: url(#blur);
+  }
+
+  .info {
+    position: fixed;
+    padding: 1rem;
+    pointer-events: none;
+  }
+
+  p,
+  h1,
+  li,
+  ul,
+  a {
+    pointer-events: all;
+    width: max-content;
+    margin: 0;
+    padding: 0;
+  }
+
+  ul {
+    list-style: none;
+    margin-top: 0.25rem;
+  }
+</style>

@@ -1,0 +1,9 @@
+{
+  "imports": {
+    "react": "https://cdn.jsdelivr.net/npm/@esm-bundle/react/esm/react.development.js",
+    "react-dom": "https://cdn.jsdelivr.net/npm/@esm-bundle/react-dom/esm/react-dom.development.min.js",
+    "htm": "https://unpkg.com/htm@3.0.2/dist/htm.module.js?module",
+    "htm/react": "https://unpkg.com/htm@3.0.2/react/index.module.js",
+    "components/": "../src/components/"
+  }
+}

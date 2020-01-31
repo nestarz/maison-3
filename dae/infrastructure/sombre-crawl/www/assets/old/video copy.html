@@ -1,0 +1,100 @@
+<body>
+  <div class="grid">
+    <div id="container"></div>
+    <div id="notes">
+      <h1>Notes</h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi sed
+        vel temporibus, eos nihil quo delectus voluptatibus cupiditate enim
+        nobis at suscipit optio accusantium est? Id eos provident quos tempora.
+      </p>
+    </div>
+  </div>
+</body>
+
+<script type="module">
+  import mean, { getImage } from "./dominantColor.js";
+
+  async function main() {
+    let sites = await fetch("../output/crawler/20200126.jsonl")
+      .then(response => response.text())
+      .then(raw => raw.split(/[\r\n](?=.)/))
+      .then(jsons => jsons.map(json => JSON.parse(json)));
+    const count = 200;
+    const from = Math.max(0, Math.random() * sites.length - count);
+    sites = sites.slice(from, from + count);
+
+    const container = document.querySelector("#container");
+    (await Promise.all(sites.map(getImage)))
+      .filter(site => site.image)
+      .sort((i1, i2) => i1.mean.hsv[2] > i2.mean.hsv[2])
+      .forEach((site, index) => {
+        setTimeout(() => {
+          const rgb = site.mean.rgb;
+          document
+            .querySelector("body")
+            .setAttribute("style", `background-color: rgb(${rgb.join(",")})`);
+          if (document.querySelector("img")) {
+            container.replaceChild(site.image, document.querySelector("img"));
+          } else {
+            container.appendChild(site.image);
+          }
+        }, 500 * index);
+      });
+  }
+
+  main();
+</script>
+
+<style>
+  html,
+  body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    overflow: hidden;
+  }
+  .grid {
+    height: 100%;
+    width: 80vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 2rem;
+    grid-auto-rows: min-content;
+    margin: 0;
+    padding: 0;
+    justify-items: center;
+    align-content: center;
+  }
+  img {
+    /* box-shadow: 0px 0px 40px 0px rgba(0, 0, 0, 0.28); */
+  }
+  #notes {
+    max-width: 20rem;
+    align-self: flex-end;
+    padding-left: 2rem;
+    position: relative;
+  }
+  #notes::before {
+    content: " ";
+    background: white;
+    position: absolute;
+    top: -100vh;
+    bottom: -100vh;
+    right: -100vw;
+    left: 0;
+    z-index: -1;
+  }
+  h1,
+  p {
+    margin: 0;
+  }
+  h1 {
+    margin-bottom: 1rem;
+  }
+</style>

@@ -1,0 +1,9 @@
+{
+  "imports": {
+    "build/": "../build/",
+    "layout/": "../layout/",
+    "components/": "../components/",
+    "pages/": "../pages/",
+    "utils/": "../utils/"
+  }
+}

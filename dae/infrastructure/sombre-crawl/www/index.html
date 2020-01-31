@@ -1,0 +1,382 @@
+<body>
+  <div id="book">
+    <article style="padding: 1rem">
+      <p>Photo library in the Internet limbo</p>
+      <span>
+        A sample of hidden sites in the onion network sorted by categories
+      </span>
+    </article>
+    <article></article>
+    <article style="padding: 1rem">
+      <i style="text-align: justify;"
+        ><b>Important Note</b> This collection of screenshots is from TOR hidden
+        websites. Each piece have been sampled algorithmically using a handmade
+        crawler and a base directory, in essence it works the same as Google
+        Search Engine. This mean that each piece have not been carefully
+        reviewed, and even if each website have been processed to filter
+        sensitives images before the screenshot, even if I have spent time to
+        discard high sensitive images, some content may hurt or could be totally
+        illegal. <b>Please, be aware of this warning.</b></i
+      >
+    </article>
+    <article style="padding: 1rem">
+      <p style="height: auto">
+        Index (1)
+      </p>
+      <span></span>
+      <span>Domain Name System.</span>
+      <span>Internet.</span>
+      <h1>
+        The purpose of the DNS is to enable Internet applications and their
+        users to name things that need a globally unique name. The benefit is
+        easily memorizable names for things like web pages or mailboxes, rather
+        than codes. The other benefit is the separation of the name from its
+        location.
+      </h1>
+      <h1>
+        A top level domain is the last part of an internet address. There are
+        about 315 country-level codes - such as .nl, .it or .fr for France - and
+        1239 "generic" TLDs (gTLDs) that go across the net – such as .com or
+        .org. Only Icann – the internet Corporation for Assigned Names and
+        Numbers – can create new TLDs, whether country, generic, etc..., because
+        only it has the authority to change the "root zone" – the computer file
+        which authorises new TLDs. Attributed TLDs are managed by corporations,
+        governments, associations or Icann itself, they have the power to write
+        and remove from each telephone directory.
+      </h1>
+      <h1>
+        Unlike the telephone network, which for years in most countries was run
+        by a single company, the Internet consists of tens of thousands of
+        interconnected networks run by different agents. Open standards enable
+        this network of networks to communicate.
+      </h1>
+    </article>
+    <article style="padding: 1rem">
+      <iframe
+        frameborder="0"
+        src="https://chez.eliasrhouzlane.com/dae/infrastructure/top_level_domains/index.html"
+      ></iframe>
+      <span>Top Level Domains (TLDs) Manager Map</span>
+    </article>
+    <article style="padding: 1rem">
+      <iframe
+        frameborder="0"
+        src="https://chez.eliasrhouzlane.com/dae/infrastructure/top_level_domains/index.html"
+      ></iframe>
+      <span>Top Level Domains (TLDs) Manager Map</span>
+    </article>
+    <article style="padding: 1rem">
+      <iframe
+        frameborder="0"
+        src="http://vps770320.ovh.net/dae/infrastructure/top_level_domains/index.html"
+      ></iframe>
+      <span>Top Level Domains (TLDs) Manager Map</span>
+    </article>
+    <article style="padding: 1rem">
+      <p style="height: auto">
+        Index (2)
+      </p>
+      <span></span>
+      <span>Request for Comments (RFC).</span>
+      <span>TCP/IP Protocol.</span>
+      <h1>
+        The RFC system was invented by Steve Crocker in 1969 to help record
+        unofficial notes on the development of ARPANET. RFCs have since become
+        official documents of Internet specifications, communications protocols,
+        procedures, and events. According to Crocker, the documents "shape the
+        Internet's inner workings and have played a significant role in its
+        success", but are not well known outside the community
+      </h1>
+      <h1>
+        Request for Comments (RFC), in information and communications
+        technology, is a type of text document from the technology community. An
+        RFC document may come from many bodies including from the Internet
+        Engineering Task Force (IETF), the Internet Research Task Force (IRTF),
+        the Internet Architecture Board (IAB), or from independent authors. The
+        RFC system is supported by the Internet Society (ISOC).
+      </h1>
+      <h1>
+        The official name of TCP/IP is the Internet Protocol Suite. TCP/IP
+        provides end-to-end data communication specifying how data should be
+        packetized, addressed, transmitted, routed, and received. It's the
+        fundamental suite of protocols that is shared by all interconnected
+        servers that make the Internet.
+      </h1>
+    </article>
+    <article style="padding: 1rem">
+      <p style="height: auto; padding-left: 2.4rem; direction: ltr;">
+        Index (3)
+      </p>
+      <span></span>
+      <span>TOR.</span>
+      <span>Onion Routing.</span>
+      <h1>
+        Onion routing was developed in the mid-1990s at the U.S. Naval Research
+        Laboratory to protect U.S. intelligence communications online. It was
+        further developed by the Defense Advanced Research Projects Agency
+        (DARPA) and patented by the Navy in 1998. After the Naval Research
+        Laboratory released the code for Tor under a free license, The Tor
+        Project was founded as a non-profit organization in 2006, with the
+        financial support of the Electronic Frontier Foundation and several
+        other organizations.
+      </h1>
+      <h1>
+        Onion Routing prevents the transport medium from knowing who is
+        communicating with whom -- the network knows only that communication is
+        taking place. In addition, the content of the communication is hidden
+        from eavesdroppers up to the point where the traffic leaves the TOR
+        network. <br />
+        Web services and other services are subject to Distributed Denial of
+        Service and even potential physical attack. But if the logical and
+        physical location of a service is hidden, then it can resist such
+        attacks, even from those with authorized access to the service. Hidden
+        services and clients use rendezvous points to communicate.
+      </h1>
+      <h1>
+        The latest Onion Routing system is freely available and runs on most
+        common operating systems. There is a Tor network of several thousands
+        nodes, processing traffic from hundreds of thousands of unknown users.
+      </h1>
+    </article>
+    <article></article>
+  </div>
+</body>
+
+<script type="module">
+  import mean from "./color.js";
+
+  function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  const slug = string => string.replace(/\//g, "").replace(/ /g, "");
+  async function main() {
+    let sites = await fetch("../output/crawler/20200126.jsonl")
+      .then(response => response.text())
+      .then(raw => raw.split(/[\r\n](?=.)/))
+      .then(jsons => jsons.map(json => JSON.parse(json)));
+
+    const categories = [
+      ...new Set(sites.map(site => site.parent.category).sort())
+    ];
+
+    sites = categories.flatMap(category => {
+      if (category === "Adult/Porn") return [];
+      const max = ["Unsorted", "Whistleblowing"].includes(category) ? 35 : 17;
+      const subsites = shuffle(
+        sites.filter(site => site.parent.category === category)
+      );
+      return subsites.slice(0, Math.min(max, subsites.length));
+    });
+    console.log(sites.length);
+
+    const book = document.querySelector("#book");
+    categories
+      .map(category => {
+        const div = document.createElement("div");
+        div.setAttribute("id", slug(category));
+        return div;
+      })
+      .forEach(category => book.appendChild(category));
+
+    const images = await Promise.all(
+      sites.map(
+        async site =>
+          new Promise(resolve => {
+            const image = new Image();
+            image.src = `../output/screenshot/legal/${site.id}.png`;
+            image.onload = () => resolve(image);
+            image.onerror = () => resolve(null);
+            return image;
+          })
+      )
+    );
+
+    sites
+      .map((site, index) => {
+        const image = images[index];
+        if (!image) return;
+
+        const node = document.createElement("article");
+        node.innerHTML = `
+            <div class="image-container">
+            </div>
+            <div class="right">
+              <span>${site.id}.onion — <div class="N">${index}</div></span>
+              <p>${site.parent.description}</p>
+              <h1>${site.parent.category}</h1>
+            </div>
+          `;
+        node.querySelector(".image-container").appendChild(image);
+        const hsv = mean(image).hsv;
+        node
+          .querySelector(".image-container")
+          .setAttribute(
+            "style",
+            `background-color: hsl(${hsv[0]}, ${hsv[1] * 100}%, 90%)`
+          );
+        return { category: site.parent.category, node };
+      })
+      .filter(object => object)
+      .forEach(({ category, node }) =>
+        document.getElementById(slug(category)).appendChild(node)
+      );
+
+    // Playback For Screens
+    setTimeout(() => {
+      const articles = document.querySelectorAll("article");
+      articles.forEach((article, index) => {
+        const n = article.querySelector(".N");
+        if (n) {
+          n.innerHTML = index;
+        }
+      });
+    }, 1);
+
+    if (window.matchMedia("screen").matches) {
+      const articles = document.querySelectorAll("article");
+      articles.forEach((article, index) => {
+        setTimeout(
+          () =>
+            articles.forEach(article2 => {
+              if (article !== article2) {
+                Object.assign(article2.style, {
+                  display: "none"
+                });
+              } else {
+                Object.assign(article2.style, {
+                  display: "grid"
+                });
+              }
+            }),
+          index * 5000
+        );
+      });
+    }
+  }
+
+  main().then(() => {
+    import("./assets/loading-attribute-polyfill.js");
+  });
+</script>
+
+<style>
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  @font-face {
+    font-family: "LarishNeueSemibold-Regular";
+    src: url("./assets/fonts/LarishNeueSemibold-Regular.otf");
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 1.5rem;
+  }
+
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    font-family: "LarishNeueSemibold-Regular", sans-serif;
+  }
+
+  article {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    page-break-after: always;
+    overflow: hidden;
+  }
+
+  @media screen {
+  }
+
+  @media print {
+    article:nth-child(odd) {
+      direction: rtl;
+    }
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
+      padding: 1rem;
+      transform: scale(2) translateX(2.8rem);
+    }
+
+    article:nth-child(odd) img {
+      transform: scale(2) translateX(-2.8rem);
+    }
+  }
+
+  .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .right {
+    width: 20rem;
+    display: grid;
+    grid-template-columns: 1rem 1fr;
+    grid-gap: 1rem;
+    grid-template-rows: 1fr;
+    padding: 1rem;
+    /* background: red; */
+  }
+
+  .N {
+    display: inline;
+  }
+
+  span {
+    writing-mode: vertical-lr;
+    text-align: right;
+    height: 100%;
+    width: 1rem;
+    overflow: hidden;
+    grid-row: span 2;
+    color: black;
+    margin-bottom: -38rem;
+    line-height: 24.1px;
+    font-size: 68%;
+  }
+
+  h1,
+  p {
+    margin: 0;
+    font-size: 1rem;
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+    align-items: end;
+  }
+
+  p {
+    font-size: 5rem;
+    height: 80vh;
+    overflow: hidden;
+  }
+
+  span,
+  h1,
+  p {
+    /* background: #4bff56; */
+  }
+
+  iframe {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+  }
+</style>

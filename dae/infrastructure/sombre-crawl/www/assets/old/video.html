@@ -1,0 +1,163 @@
+<body>
+  <div class="grid">
+    <div id="container"></div>
+    <div id="notes">
+      <span style="word-break: break-all;"></span>
+      <div class="ps">
+        <i
+          >This website is a collection of screenshots of TOR hidden websites.
+          From "Daniel" directory much like a phone book, they are collected.</i
+        >
+      </div>
+      <p></p>
+      <h1></h1>
+    </div>
+  </div>
+</body>
+
+<script type="module">
+  import mean from "./dominantColor.js";
+
+  function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  async function main() {
+    let sites = await fetch("../output/crawler/20200126.jsonl")
+      .then(response => response.text())
+      .then(raw => raw.split(/[\r\n](?=.)/))
+      .then(jsons => jsons.map(json => JSON.parse(json)));
+
+    shuffle(sites).forEach((site, index) => {
+      setTimeout(() => {
+        const node = document.querySelector("img");
+        const img = new Image();
+        img.src = `../output/screenshot/legal/${site.id}.png`;
+        img.onload = () => {
+          const hsv = mean(img).hsv;
+          document
+            .querySelector("body")
+            .setAttribute(
+              "style",
+              `background-color: hsl(${hsv[0]}, ${hsv[1] * 100}%, 90%)`
+            );
+          document.querySelector("h1").innerHTML = site.parent.category;
+          document.querySelector("p").innerHTML = site.parent.description;
+          document.querySelector("span").innerHTML = `${site.id.slice(
+            0,
+            Math.min(20, site.id.length - 1)
+          )}.onion`;
+          if (node) {
+            container.replaceChild(img, node);
+          } else {
+            container.appendChild(img);
+          }
+        };
+      }, 2000 * index);
+    });
+  }
+
+  main();
+</script>
+
+<style>
+  @font-face {
+    font-family: "LarishNeueSemibold-Regular";
+    src: url("./assets/fonts/LarishNeueSemibold-Regular.otf");
+  }
+  html {
+    font-size: 1.5rem;
+  }
+  html,
+  body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "LarishNeueSemibold-Regular", -apple-system, BlinkMacSystemFont,
+      "Helvetica Neue", sans-serif;
+    overflow: hidden;
+  }
+  #container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .grid {
+    height: 100%;
+    width: 95vw;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 1rem;
+    grid-auto-rows: min-content;
+    margin: 0;
+    padding: 0;
+    align-content: center;
+  }
+  img {
+    /* box-shadow: 0px 0px 40px 0px rgba(0, 0, 0, 0.28); */
+    width: 100%;
+  }
+  #notes {
+    width: 20rem;
+    padding-left: 1rem;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1rem 1fr;
+    grid-gap: 1rem;
+    grid-template-rows: 1fr;
+  }
+  #notes::before {
+    content: " ";
+    background: white;
+    position: absolute;
+    top: -100vh;
+    bottom: -100vh;
+    right: -100vw;
+    left: 0;
+    z-index: -1;
+    /* filter: blur(20rem); */
+  }
+  h1,
+  p {
+    margin: 0;
+    font-size: 1rem;
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+    align-items: end;
+  }
+  span {
+    writing-mode: vertical-lr;
+    text-align: right;
+    height: calc(100% - .2rem);
+    width: 1rem;
+    overflow: hidden;
+    grid-row: span 3;
+    color: black;
+    margin-bottom: -38rem;
+    line-height: 24.1px;
+    font-size: 68%;
+    padding-bottom: .2rem;
+  }
+  nav {
+    flex: 1;
+  }
+  .ps {
+    font-size: 0.5rem;
+    max-width: 16rem;
+    opacity: 0.4;
+  }
+  p {
+    font-size: 5rem;
+    height: 80vh;
+    overflow: hidden;
+  }
+</style>

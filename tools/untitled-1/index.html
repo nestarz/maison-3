@@ -1,0 +1,69 @@
+<body>
+  <div class="track">
+    <div class="audio-track"></div>
+  </div>
+  <div class="track">
+    <div class="audio-track"></div>
+  </div>
+  <div class="track">
+    <div class="audio-track"></div>
+  </div>
+</body>
+
+<script type="module">
+  import workerTimer from "./src/utils/worker-timer.js";
+
+  function setTrack(stream) {
+    const recorder = new MediaRecorder(stream);
+    const audio = Object.assign(document.createElement("audio"), {
+      class: "audio-track",
+      autoplay: true,
+      loop: true
+    });
+
+    recorder.ondataavailable = async function(event) {
+      const src = URL.createObjectURL(event.data);
+      audio.setAttribute("src", src);
+    };
+
+    return { recorder, audio };
+  }
+
+  async function main() {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    document.querySelectorAll(".track").forEach((track, index) => {
+      const { recorder } = setTrack(stream);
+      const length = (index + 1) * 5 * 1000 + Math.random() * 2; // Durée d'une boucle sonore
+      const window = 0.2 * length; // Fenêtre d'enregistrement
+      workerTimer.setInterval(() => {
+        recorder.start();
+        track.classList.toggle("recording");
+
+        workerTimer.setTimeout(() => {
+          recorder.stop();
+          track.classList.toggle("recording");
+        }, window);
+      }, length);
+    });
+  }
+
+  main();
+</script>
+
+<style>
+  body,
+  html {
+    margin: 0;
+    height: 100%;
+  }
+
+  .track {
+    width: 100%;
+    height: 33.33333%;
+    background-color: black;
+  }
+
+  .recording {
+    background-color: blue;
+  }
+</style>
